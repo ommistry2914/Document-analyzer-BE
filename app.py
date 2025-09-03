@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from routes import auth_routes, doc_routes
 from fastapi.middleware.cors import CORSMiddleware
 import os
@@ -30,6 +30,10 @@ def health_check():
 async def startup_event():
     print("🚀 Server is up and running.")
 
+v1_router = APIRouter(prefix="/v1")
 
-app.include_router(auth_routes.router)
+v1_router.include_router(auth_routes.router)
 # app.include_router(doc_routes.router)
+
+
+app.include_router(v1_router)
